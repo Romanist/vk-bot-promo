@@ -11,7 +11,7 @@ const request = require('request-promise')
 const Schema = mongoose.Schema;
 
 const app = express();
-let mongoDB = 'mongodb://someuser:abcd1234@ds163694.mlab.com:63694/productstutorial';
+let mongoDB = 'localhost:27017/filmstry';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
@@ -36,97 +36,26 @@ const scene = new Scene('meet',
   (ctx) => {
     ctx.session.step = 0;
     ctx.session.value = 0;
-    stepUp(ctx);
   },
   (ctx) => {
     ctx.session.step = 1;
-    stepUp(ctx);
   },
   (ctx) => {
     ctx.session.step = 2;
-    stepUp(ctx);
   },
   (ctx) => {
     ctx.session.step = 3;
-    stepUp(ctx);
   },
   (ctx) => {
     ctx.session.step = 4;
-    stepUp(ctx);
   },
   (ctx) => {
     ctx.session.step = 5;
-    stepUp(ctx);
-  },
-  (ctx) => {
-    ctx.session.step = 6;
-    stepUp(ctx);
-  },
-  (ctx) => {
-    ctx.session.step = 7;
-    stepUp(ctx);
-  },
-  (ctx) => {
-    ctx.session.step = 8;
-    stepUp(ctx);
   },
   (ctx) => {
     ctx.scene.leave();
   }
 )
-
-async function stepUp(ctx) {
-  let step = ctx.session.step ? ctx.session.step : 0;
-  let value = Number(ctx.session.value) ? Number(ctx.session.value) : 0;
-  let curValue = Number(ctx.message.payload) ? Number(ctx.message.payload) : 0;
-  value = Number(value) + Number(curValue);
-  ctx.session.value = value;
-  let curStepMin = questObj[step - 1];
-
-  console.log(step)
-  if ((!curValue) && (step > 0)) {
-    ctx.reply('To hit buttons only!\nTry Again\n\n' + curStepMin.question, null, Markup
-      .keyboard([
-        [
-          Markup.button(curStepMin.answers.answer1.text, 'primary', 10),
-          Markup.button(curStepMin.answers.answer2.text, 'primary', 20),
-          Markup.button(curStepMin.answers.answer3.text, 'primary', 40) 
-        ]
-      ])
-      .oneTime());
-    return false;
-  }
-
-  if (numbOfQuestions <= step) {
-    ctx.reply('Your number of points is ' + value, null, Markup
-    .keyboard([
-      [
-        Markup.button('начать заново', 'primary', 'renew')
-      ]
-    ])
-    .oneTime());
-    saveToDB(ctx, step, value)
-    ctx.scene.leave()
-    return false
-  }
-
-  let curStep = questObj[step];
-
-  ctx.reply(curStep.question, null, Markup
-    .keyboard([
-      [
-        Markup.button(curStep.answers.answer1.text, 'primary', 10),
-        Markup.button(curStep.answers.answer2.text, 'primary', 20),
-        Markup.button(curStep.answers.answer3.text, 'primary', 40) 
-      ]
-    ])
-    .oneTime());
-
-  step++;
-  ctx.session.step = step;
-
-  saveToDB(ctx, step, value)
-}
 
 async function renew(ctx) {
   console.log('renew start!')
@@ -287,11 +216,15 @@ bot.on((ctx) => {
   console.log(' ')
   console.log('_____________________________________')
   console.log(' ')
-  if ((ctx.message.payload == '"renew"')) {
-    renew(ctx);
-    return false;
-  }
-  checkDB(ctx);
+  // if ((ctx.message.payload == '"renew"')) {
+  //   renew(ctx);
+  //   return false;
+  // }
+  // checkDB(ctx);
+})
+
+bot.command('го!', (ctx) => {
+  ctx.scene.enter('meet')
 })
 
 app.use(bodyParser.json());

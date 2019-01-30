@@ -1,0 +1,3 @@
+./mongoimport -h localhost --port 27017 --file -d filmstry -c filmstry All_MEGOGO_v2_Sheet1.csv --type csv --headerline
+./mongoimport -h localhost --port 27017 -c filmstry --file All_MEGOGO_v2_Sheet1.csv --type csv --headerline
+
