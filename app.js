@@ -20,14 +20,17 @@ let checkDB = require('./modules/checkDB')
 let saveToDB = require('./modules/saveToDB')
 let renew = require('./modules/renew')
 let checkAnswer = require('./modules/checkAnswer')
+let findFilm = require('./modules/findFilm')
 
 const app = express();
-let mongoDB = 'mongodb://someuser:abcd1234@ds163694.mlab.com:63694/productstutorial';
+let mongoDB = 'mongodb://someuser:abcd1234@ds127961.mlab.com:27961/filmsforvoka';
+// let mongoDB = 'mongodb://someuser:abcd1234@ds163694.mlab.com:63694/productstutorial';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 
 let User = require('./modules/userShema')
+let value = require('./modules/value')
 
 const bot = new VkBot({
   token: 'f6f4f511b58e60eead7622ec875a7036ba82058346d3736a18c3c717f88a0d72667c7057c3e4ea6c492cd',
@@ -35,7 +38,6 @@ const bot = new VkBot({
 });
 
 let numbOfQuestions = questObj.length;
-let value = require('./modules/value')
 
 const scene = new Scene('meet',
   (ctx) => {
@@ -82,14 +84,18 @@ const scene = new Scene('meet',
     ctx.session.step = 5;
     if (checkAnswer(2, ctx)) {
       value.step4 = ctx.message.text
+      ctx.session.value.step4 = value.step4
       console.log(value.step4)
       saveToDB(ctx, 4, value)
+      // findFilm(ctx)
     } else {
       step4(ctx)
     }
   },
   (ctx) => {
-    ctx.scene.leave();
+    console.log('heh')
+    ctx.session.step = 6;
+    // ctx.scene.leave();
   }
 )
 

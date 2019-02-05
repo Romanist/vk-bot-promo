@@ -5,6 +5,7 @@ const request = require('request-promise')
 const Schema = mongoose.Schema;
 
 let User = require('./userShema')
+let findFilm = require('./findFilm')
 
 async function saveToDB(ctx, step, value) {
   let contextScene = ctx.scene;
@@ -43,6 +44,7 @@ async function saveToDB(ctx, step, value) {
   }).exec();
   promise.then(ctx => {
     contextScene.next()
+    if (step === 4) findFilm(ctx)
   }, err => {
     console.log('err', err)
   });

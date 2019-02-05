@@ -65,6 +65,9 @@ async function checkDB(ctx) {
       var curStep = 0
     } else curStep = ctx.step ? ctx.step : 0;
     if (curStep) {
+      curStep = curStep + 2
+      // contextScene.value = 
+      console.log(ctx)
       contextScene.enter('meet', [curStep])
     } else {
       contextScene.enter('meet')
