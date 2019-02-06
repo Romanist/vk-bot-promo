@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const request = require('request-promise')
 const Schema = mongoose.Schema;
 
-let bonusShema = new Schema({
+let promoShema = new Schema({
     promo: {type: String, required: true, max: 30},
     used: {type: Boolean, required: true}
 });
-let Bonus = mongoose.model('Bonus', bonusShema);
+let Promo = mongoose.model('Promo', promoShema);
 
-module.exports = Bonus;
+module.exports = Promo;

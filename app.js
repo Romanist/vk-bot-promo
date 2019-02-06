@@ -42,7 +42,6 @@ let numbOfQuestions = questObj.length;
 const scene = new Scene('meet',
   (ctx) => {
     ctx.session.step = 0;
-    // ctx.session.value = 0;
     ctx.session.value = {};
     ctx.scene.next()
     step0(ctx)
@@ -84,10 +83,8 @@ const scene = new Scene('meet',
     ctx.session.step = 5;
     if (checkAnswer(2, ctx)) {
       value.step4 = ctx.message.text
-      ctx.session.value.step4 = value.step4
       console.log(value.step4)
       saveToDB(ctx, 4, value)
-      // findFilm(ctx)
     } else {
       step4(ctx)
     }
@@ -109,13 +106,7 @@ bot.on((ctx) => {
   console.log(' ')
   console.log('_____________________________________')
   console.log(' ')
-  // ctx.scene.enter('meet')
   checkDB(ctx)
-  // if ((ctx.message.payload == '"renew"')) {
-  //   renew(ctx);
-  //   return false;
-  // }
-  // checkDB(ctx);
 })
 
 app.use(bodyParser.json());

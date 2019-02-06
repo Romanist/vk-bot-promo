@@ -33,7 +33,8 @@ async function checkDB(ctx) {
               step3: 0,
               step4: 0
             },
-            step: 0
+            step: 0,
+            hasBonus: false
           }
         );
         let options = {

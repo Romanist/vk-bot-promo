@@ -14,7 +14,9 @@ let UserSchema = new Schema({
     },
     step: {type: Number, required: true},
     first_name: {type: String},
-    last_name: {type: String}
+    last_name: {type: String},
+    hasBonus: {type: Boolean, required: true},
+    films: [String]
 });
 let User = mongoose.model('User', UserSchema);
 
