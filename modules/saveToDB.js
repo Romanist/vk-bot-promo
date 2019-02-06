@@ -8,6 +8,7 @@ let User = require('./userShema')
 let findFilm = require('./findFilm')
 
 async function saveToDB(ctx, step, value) {
+  let _ctx = ctx
   let contextScene = ctx.scene;
   let id = ctx.message.from_id;
   let promise = User.findOne({'id': id}, function (err, user) {
@@ -44,7 +45,7 @@ async function saveToDB(ctx, step, value) {
   }).exec();
   promise.then(ctx => {
     contextScene.next()
-    if (step === 4) findFilm(ctx)
+    if (step === 4) findFilm(ctx, _ctx)
   }, err => {
     console.log('err', err)
   });

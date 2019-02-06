@@ -93,9 +93,9 @@ const scene = new Scene('meet',
     }
   },
   (ctx) => {
-    console.log('heh')
     ctx.session.step = 6;
-    // ctx.scene.leave();
+    ctx.scene.leave()
+    ctx.scene.enter('meet', 2)
   }
 )
 

@@ -8,6 +8,7 @@ let filmShema = new Schema({
 	Id: {type: String, required: true},
 	Category: {type: Number, required: true},
 	Name: {type: String, required: true},
+	Slug: {type: String, required: true},
 	"Production year": {type: Number, required: true},
 	Genres: {type: String},
 	Genres2: {type: String},

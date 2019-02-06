@@ -3,12 +3,13 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const request = require('request-promise')
 const Schema = mongoose.Schema;
+const Markup = require('../lib/markup')
 
 let User = require('./userShema')
 let Film = require('./filmShema')
 let Bonus = require('./bonusShema')
 
-async function findFilm(ctx) {
+async function findFilm(ctx, cont) {
 	console.log('findfilm')
   let id = ctx.id;
   let value;
@@ -27,17 +28,18 @@ async function findFilm(ctx) {
   }).exec();
   promise.then(ctx => {
   	// console.log(ctx)
-  	generateFilm(ctx, _ctx)
+  	generateFilm(ctx, _ctx, cont)
   }, err => {
     console.log('err', err)
   });
 }
 
-async function generateFilm(data, ctx) {
+async function generateFilm(data, ctx, cont) {
 	let value = data.value
+	let _ctx = ctx
 	console.log(value)
 
- 	let category = ((value.step1 === '1') || (value.step1 === '3')) ? 1 : ((value.step1 === '2') || (value.step1 === '4')) ? '' : 2;
+ 	let category = (value.step1 === '3') ? 2 : 1;
 
  	let genre1 = value.step2 === '1' ? 'Комедия' :
  		value.step2 === '2' ? 'Триллер' : 
@@ -72,7 +74,6 @@ async function generateFilm(data, ctx) {
   	'Production year': { $gte: yearStart, $lte: yearEnd },
   	Category: category,
   	Age: { $gte: 0, $lte: age },
-  	// Genres:
   	$or: [
   		{Genres: genre1},
   		{Genres: genre3},
@@ -86,15 +87,12 @@ async function generateFilm(data, ctx) {
   	]
   }).exec(function (err, count) {
 
-	  // Get a random entry
 	  var random = Math.floor(Math.random() * count)
 
-	  // Again query all users but only fetch one offset by our random #
 	  Film.findOne({
 	  	'Production year': { $gte: yearStart, $lte: yearEnd },
 	  	Category: category,
 	  	Age: { $gte: 0, $lte: age },
-	  	// Genres:
 	  	$or: [
 	  		{Genres: genre1},
 	  		{Genres: genre3},
@@ -109,7 +107,25 @@ async function generateFilm(data, ctx) {
 	  }).skip(random).exec(
 	    function (err, result) {
 	      // Tada! random user
-	      console.log(result) 
+	      if (!result) {
+	      	cont.reply('Хмм, я ещё не нашёл идеальный фильм для тебя. Попробуй пройти тест ещё раз или выбери нужный тебе фильм по подарочному промокоду на сервисе VOKA.​', null, Markup
+				    .keyboard([
+				      [
+				        Markup.button('выбрать новый фильм', 'primary')
+				      ]
+				    ])
+				    .oneTime());
+	      } else {
+	      	cont.reply('Мне кажется, я узнал тебя чуточку лучше и подобрал фильм, который тебе подойдет\n\nТы готов? Тогда лови​: "' + result.Name + '" \n\nhttps://www.voka.tv/movies/' + result.Slug + '\n', null, Markup
+				    .keyboard([
+				      [
+				        Markup.button('выбрать новый фильм', 'primary')
+				      ]
+				    ])
+				    .oneTime());
+	      }
+	      console.log(result)
+	      // cont.scene.leave();
 	    })
 	})
 }
