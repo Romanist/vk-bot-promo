@@ -13,6 +13,7 @@ async function findFilm(ctx) {
   let id = ctx.id;
   let value;
   let step;
+  let _ctx = ctx;
 
   let promise = User.findOne({'id': id}, async function (err, user) {
     if (err) {
@@ -26,24 +27,17 @@ async function findFilm(ctx) {
   }).exec();
   promise.then(ctx => {
   	// console.log(ctx)
-  	generateFilm(ctx)
+  	generateFilm(ctx, _ctx)
   }, err => {
     console.log('err', err)
   });
 }
 
-async function generateFilm(data) {
+async function generateFilm(data, ctx) {
 	let value = data.value
 	console.log(value)
-	// let promise = Film.find({'Genres': 'Мультфильм'}, function (err, user) {}).exec();
- //  promise.then(ctx => {
- //  	console.log(ctx)
- //  	// generateFilm(ctx)
- //  }, err => {
- //    console.log('err', err)
- //  });
 
- 	let category = value.step1 === '1' ? 1 : ((value.step1 === '2') || (value.step1 === '4')) ? '' : 2;
+ 	let category = ((value.step1 === '1') || (value.step1 === '3')) ? 1 : ((value.step1 === '2') || (value.step1 === '4')) ? '' : 2;
 
  	let genre1 = value.step2 === '1' ? 'Комедия' :
  		value.step2 === '2' ? 'Триллер' : 
@@ -62,7 +56,7 @@ async function generateFilm(data) {
  		value.step3 === '2' ? 1999 : 
  		value.step3 === '3' ? 2009 : 2019;
 
- 	let age = ((value.step1 === '1') || (value.step1 === '2') || (value.step1 === '3')) ? 100 : 6;
+ 	let age = value.step4 === '4' ? 6 : 100;
 
  	console.log('')
  	console.log(category)
@@ -74,14 +68,44 @@ async function generateFilm(data) {
  	console.log(age)
  	console.log('')
 
-  Film.count({'Production year': { $gte: yearStart, $lte: yearEnd }}).exec(function (err, count) {
+  Film.count({
+  	'Production year': { $gte: yearStart, $lte: yearEnd },
+  	Category: category,
+  	Age: { $gte: 0, $lte: age },
+  	// Genres:
+  	$or: [
+  		{Genres: genre1},
+  		{Genres: genre3},
+  		{Genres: genre2},
+  		{Genres2: genre1},
+  		{Genres2: genre2},
+  		{Genres2: genre3},
+  		{Genres3: genre1},
+  		{Genres3: genre2},
+  		{Genres3: genre3}
+  	]
+  }).exec(function (err, count) {
 
 	  // Get a random entry
 	  var random = Math.floor(Math.random() * count)
 
 	  // Again query all users but only fetch one offset by our random #
 	  Film.findOne({
-	  	'Production year': { $gte: yearStart, $lte: yearEnd }
+	  	'Production year': { $gte: yearStart, $lte: yearEnd },
+	  	Category: category,
+	  	Age: { $gte: 0, $lte: age },
+	  	// Genres:
+	  	$or: [
+	  		{Genres: genre1},
+	  		{Genres: genre3},
+	  		{Genres: genre2},
+	  		{Genres2: genre1},
+	  		{Genres2: genre2},
+	  		{Genres2: genre3},
+	  		{Genres3: genre1},
+	  		{Genres3: genre2},
+	  		{Genres3: genre3}
+	  	]
 	  }).skip(random).exec(
 	    function (err, result) {
 	      // Tada! random user

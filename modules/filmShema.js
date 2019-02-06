@@ -9,10 +9,10 @@ let filmShema = new Schema({
 	Category: {type: Number, required: true},
 	Name: {type: String, required: true},
 	"Production year": {type: Number, required: true},
-	Genres: {type: String, required: true},
+	Genres: {type: String},
 	Genres2: {type: String},
 	Genres3: {type: String},
-	Age: {type: String}
+	Age: {type: Number}
 });
 let Film = mongoose.model('Film', filmShema);
 
