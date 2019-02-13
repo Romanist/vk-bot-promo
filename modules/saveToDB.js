@@ -30,7 +30,7 @@ async function saveToDB(ctx, step, value) {
       );
       user.save(function (err) {
         if (err) {
-          return next(err);
+          console.log(err);
         }
       });
     } else {

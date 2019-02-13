@@ -48,7 +48,7 @@ async function checkDB(ctx) {
               user.last_name = context.response[0].last_name;
               let saveUser = await user.save(function (err) {
                 if (err) {
-                  return next(err);
+                  console.log(err);
                 }
               });
               await saveUser;

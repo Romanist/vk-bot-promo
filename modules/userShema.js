@@ -5,18 +5,19 @@ const request = require('request-promise')
 const Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
-    id: {type: String, required: true, max: 30},
+    id: {type: String},
     value: {
       step1: 0,
       step2: 0,
       step3: 0,
       step4: 0
     },
-    step: {type: Number, required: true},
+    step: {type: Number},
     first_name: {type: String},
     last_name: {type: String},
-    hasBonus: {type: Boolean, required: true},
-    films: [String]
+    bonus: {type: String},
+    hasBonus: {type: Boolean},
+    // films: [String]
 });
 let User = mongoose.model('User', UserSchema);
 
