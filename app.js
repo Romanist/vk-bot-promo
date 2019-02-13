@@ -21,6 +21,7 @@ let saveToDB = require('./modules/saveToDB')
 let renew = require('./modules/renew')
 let checkAnswer = require('./modules/checkAnswer')
 let findFilm = require('./modules/findFilm')
+let errorMess = require('./modules/errorMess')
 
 const app = express();
 let mongoDB = 'mongodb://someuser:abcd1234@ds127961.mlab.com:27961/filmsforvoka';
@@ -52,6 +53,7 @@ const scene = new Scene('meet',
       ctx.scene.next()
       step1(ctx)
     } else {
+      errorMess(ctx)
       step0(ctx)
     }
   },
@@ -60,6 +62,7 @@ const scene = new Scene('meet',
     if (checkAnswer(2, ctx)) {
       step2(ctx)
     } else {
+      // errorMess(ctx)
       step1(ctx)
     }
   },
@@ -68,6 +71,7 @@ const scene = new Scene('meet',
     if (checkAnswer(2, ctx)) {
       step3(ctx)
     } else {
+      errorMess(ctx)
       step2(ctx)
     }
   },
@@ -76,6 +80,7 @@ const scene = new Scene('meet',
     if (checkAnswer(2, ctx)) {
       step4(ctx)
     } else {
+      errorMess(ctx)
       step3(ctx)
     }
   },
@@ -86,6 +91,7 @@ const scene = new Scene('meet',
       console.log(value.step4)
       saveToDB(ctx, 4, value)
     } else {
+      errorMess(ctx)
       step4(ctx)
     }
   },

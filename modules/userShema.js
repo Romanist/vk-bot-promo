@@ -6,6 +6,8 @@ const Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
     id: {type: String},
+    // link : {type: String},
+    // timeFirst : {type: String},
     value: {
       step1: 0,
       step2: 0,
@@ -17,7 +19,7 @@ let UserSchema = new Schema({
     last_name: {type: String},
     bonus: {type: String},
     hasBonus: {type: Boolean},
-    // films: [String]
+    films: [String]
 });
 let User = mongoose.model('User', UserSchema);
 

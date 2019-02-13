@@ -101,7 +101,7 @@ async function generateFilm(data, ctx, cont) {
  	console.log(age)
  	console.log('')
 
-  Film.count({
+ 	let options = {
   	'Production year': { $gte: yearStart, $lte: yearEnd },
   	Category: category,
   	Age: { $gte: 0, $lte: age },
@@ -116,13 +116,15 @@ async function generateFilm(data, ctx, cont) {
   		{Genres3: genre2},
   		{Genres3: genre3}
   	]
-  }).exec(function (err, count) {
+  }
 
-	  var random = Math.floor(Math.random() * count)
-
-	  Film.findOne({
+  if (value.step1 === '3') {
+  	options = {
 	  	'Production year': { $gte: yearStart, $lte: yearEnd },
-	  	Category: category,
+	  	$or: [
+	  		{Category: 1},
+	  		{Category: 2}
+	  	],
 	  	Age: { $gte: 0, $lte: age },
 	  	$or: [
 	  		{Genres: genre1},
@@ -135,7 +137,14 @@ async function generateFilm(data, ctx, cont) {
 	  		{Genres3: genre2},
 	  		{Genres3: genre3}
 	  	]
-	  }).skip(random).exec(
+	  }
+  }
+
+  Film.count(options).exec(function (err, count) {
+
+	  var random = Math.floor(Math.random() * count)
+
+	  Film.findOne(options).skip(random).exec(
 	    function (err, result) {
       	generateBonus(cont, result, sku)
 	      console.log(result)
@@ -194,7 +203,7 @@ async function generateFilm2(data, ctx, cont) {
  	console.log(age)
  	console.log('')
 
-  Film.count({
+ 	let options = {
   	'Production year': { $gte: yearStart, $lte: yearEnd },
   	Category: category,
   	Age: { $gte: 0, $lte: age },
@@ -209,13 +218,15 @@ async function generateFilm2(data, ctx, cont) {
   		{Genres3: genre2},
   		{Genres3: genre3}
   	]
-  }).exec(function (err, count) {
+  }
 
-	  var random = Math.floor(Math.random() * count)
-
-	  Film.findOne({
+  if (value.step1 === '3') {
+  	options = {
 	  	'Production year': { $gte: yearStart, $lte: yearEnd },
-	  	Category: category,
+	  	$or: [
+	  		{Category: 1},
+	  		{Category: 2}
+	  	],
 	  	Age: { $gte: 0, $lte: age },
 	  	$or: [
 	  		{Genres: genre1},
@@ -228,12 +239,19 @@ async function generateFilm2(data, ctx, cont) {
 	  		{Genres3: genre2},
 	  		{Genres3: genre3}
 	  	]
-	  }).skip(random).exec(
+	  }
+  }
+
+  Film.count(options).exec(function (err, count) {
+
+	  var random = Math.floor(Math.random() * count)
+
+	  Film.findOne(options).skip(random).exec(
 	    function (err, result) {
 	    	// generateBonus(cont)
 	      // Tada! random user
 	      if (!result) {
-	      	cont.reply('Хмм, я ещё не нашёл идеальный фильм для тебя. Попробуй пройти тест ещё раз или выбери нужный тебе фильм по подарочному промокоду на сервисе VOKA.​', null, Markup
+	      	cont.reply('Хмм, я ещё не нашёл идеальный фильм для тебя. Попробуй пройти тест ещё раз или выбери нужный тебе фильм по подарочному промокоду на сервисе VOKA.​' + '\n\nАх, да, самое приятное! Держи свой персональный промокод на подписку от VOKA:\n' + ctx.bonus + '\n\nЯ уверен, тебе понравится. А чтобы точно понравилось, попробуй к этом фильму вкус чипсов:\n' + sku, null, Markup
 				    .keyboard([
 				      [
 				        Markup.button('выбрать новый фильм', 'primary')
