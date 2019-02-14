@@ -2,15 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const request = require('request-promise')
-const Schema = mongoose.Schema;
 const Markup = require('../lib/markup')
 const text = require('./text')
+const findEase = require('./findEase')
+
+const Schema = mongoose.Schema;
 
 let User = require('./userShema')
 let Film = require('./filmShema')
 let Bonus = require('./bonusShema')
-
-const findEase = require('./findEase')
 
 async function generateBonus(cont, result, sku, link, age) {
 	console.log('')
@@ -37,7 +37,7 @@ async function generateBonus(cont, result, sku, link, age) {
       console.log('____________________________________')
       console.log('out of codes!')
       console.log('____________________________________')
-      
+
       if (!result) {
 				findEase(cont, result, sku, link, age, ctx)
       } else {

@@ -2,8 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const request = require('request-promise')
-const Schema = mongoose.Schema;
 const Markup = require('../lib/markup')
+const text = require('./text')
+const findEase = require('./findEase')
+
+const Schema = mongoose.Schema;
 
 let User = require('./userShema')
 let Film = require('./filmShema')
@@ -11,9 +14,6 @@ let Bonus = require('./bonusShema')
 
 let generateBonus = require('./generateBonus')
 let repeatBonus = require('./repeatBonus')
-
-const text = require('./text')
-const findEase = require('./findEase')
 
 async function findFilm(ctx, cont) {
 	console.log('findfilm')
@@ -145,24 +145,27 @@ async function generateFilm(data, ctx, cont) {
 
 		  Film.findOne(options).skip(random).exec(
 		    function (err, result) {
-		    	if (counter >= 10) {
-		    		data.films = []
-		    	}
-		    	if ((data.films.includes(result.Slug)) && (counter < 10)) {
-		    		search()
-		    		return false
-		    	}
-		    	if (data.hasBonus) {
-		    		repeatBonus(cont, result, sku, link, age, ctx, data)
-		    	}	else {
-	      		generateBonus(cont, result, sku, link, age)
-		    		data.hasBonus = true
-		    		data.save((err) => {
-							if (err) {
-								console.log(err)
-							}
-						})   
-	      	}
+		    	if (!result) findEase(cont, result, sku, link, age, ctx)
+		    	else {
+		    		if (counter >= 10) {
+			    		data.films = []
+			    	}
+			    	if ((data.films.includes(result.Slug)) && (counter < 10)) {
+			    		search()
+			    		return false
+			    	}
+			    	if (data.hasBonus) {
+			    		repeatBonus(cont, result, sku, link, age, ctx, data)
+			    	}	else {
+		      		generateBonus(cont, result, sku, link, age)
+			    		data.hasBonus = true
+			    		data.save((err) => {
+								if (err) {
+									console.log(err)
+								}
+							})   
+		      	}
+		    	}			    	
 		    })
 		})
 		counter++;

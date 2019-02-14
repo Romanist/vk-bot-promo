@@ -2,9 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const request = require('request-promise')
-const Schema = mongoose.Schema;
 const Markup = require('../lib/markup')
 const text = require('./text')
+
+const Schema = mongoose.Schema;
 
 let User = require('./userShema')
 let Film = require('./filmShema')
