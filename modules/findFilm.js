@@ -11,6 +11,8 @@ let Bonus = require('./bonusShema')
 
 let generateBonus = require('./generateBonus')
 
+const text = require('./text')
+
 async function findFilm(ctx, cont) {
 	console.log('findfilm')
   let id = ctx.id;
@@ -91,6 +93,8 @@ async function generateFilm(data, ctx, cont) {
  		value.step2 === '2' ? 'Экшн SKU' : 
  		value.step2 === '3' ? 'Sci-fy SKU' : 'Романтика SKU';	
 
+ 	let link = (value.step1 === '2') ? text.seriesLink[0] : text.movieLink[0]
+
  	console.log('')
  	console.log(category)
  	console.log('')
@@ -115,7 +119,10 @@ async function generateFilm(data, ctx, cont) {
   		{Genres3: genre1},
   		{Genres3: genre2},
   		{Genres3: genre3}
-  	]
+  	],
+  	Genres: {$ne: 'Мультфильм'},
+  	Genres2: {$ne: 'Мультфильм'},
+  	Genres3: {$ne: 'Мультфильм'}
   }
 
   if (value.step1 === '3') {
@@ -136,7 +143,10 @@ async function generateFilm(data, ctx, cont) {
 	  		{Genres3: genre1},
 	  		{Genres3: genre2},
 	  		{Genres3: genre3}
-	  	]
+	  	],
+	  	Genres: {$ne: 'Мультфильм'},
+	  	Genres2: {$ne: 'Мультфильм'},
+	  	Genres3: {$ne: 'Мультфильм'}
 	  }
   }
 
@@ -146,7 +156,9 @@ async function generateFilm(data, ctx, cont) {
 
 	  Film.findOne(options).skip(random).exec(
 	    function (err, result) {
-      	generateBonus(cont, result, sku)
+      	generateBonus(cont, result, sku, link)
+	      console.log('')
+	      console.log('result ')
 	      console.log(result)
 	      console.log('')
 	      console.log('')
@@ -193,6 +205,8 @@ async function generateFilm2(data, ctx, cont) {
  		value.step2 === '2' ? 'Экшн SKU' : 
  		value.step2 === '3' ? 'Sci-fy SKU' : 'Романтика SKU';	
 
+ 	let link = (value.step1 === '2') ? text.seriesLink[0] : text.movieLink[0]
+
  	console.log('')
  	console.log(category)
  	console.log('')
@@ -217,7 +231,10 @@ async function generateFilm2(data, ctx, cont) {
   		{Genres3: genre1},
   		{Genres3: genre2},
   		{Genres3: genre3}
-  	]
+  	],
+  	Genres: {$ne: 'Мультфильм'},
+  	Genres2: {$ne: 'Мультфильм'},
+  	Genres3: {$ne: 'Мультфильм'}
   }
 
   if (value.step1 === '3') {
@@ -238,7 +255,10 @@ async function generateFilm2(data, ctx, cont) {
 	  		{Genres3: genre1},
 	  		{Genres3: genre2},
 	  		{Genres3: genre3}
-	  	]
+	  	],
+	  	Genres: {$ne: 'Мультфильм'},
+	  	Genres2: {$ne: 'Мультфильм'},
+	  	Genres3: {$ne: 'Мультфильм'}
 	  }
   }
 
@@ -251,18 +271,18 @@ async function generateFilm2(data, ctx, cont) {
 	    	// generateBonus(cont)
 	      // Tada! random user
 	      if (!result) {
-	      	cont.reply('Хмм, я ещё не нашёл идеальный фильм для тебя. Попробуй пройти тест ещё раз или выбери нужный тебе фильм по подарочному промокоду на сервисе VOKA.​' + '\n\nАх, да, самое приятное! Держи свой персональный промокод на подписку от VOKA:\n' + ctx.bonus + '\n\nЯ уверен, тебе понравится. А чтобы точно понравилось, попробуй к этом фильму вкус чипсов:\n' + sku, null, Markup
+	      	cont.reply(text.badSearch[0] + text.promo[0] + ctx.bonus + text.chips[0] + sku, null, Markup
 				    .keyboard([
 				      [
-				        Markup.button('выбрать новый фильм', 'primary')
+				        Markup.button(text.repeatBtnText[0], 'primary')
 				      ]
 				    ])
 				    .oneTime());
 	      } else {
-	      	cont.reply('Мне кажется, я узнал тебя чуточку лучше и подобрал фильм, который тебе подойдет\n\nТы готов? Тогда лови​: "' + result.Name + '" \n\nhttps://www.voka.tv/movies/' + result.Slug + '\n\nАх, да, самое приятное! Держи свой персональный промокод на подписку от VOKA:\n' + ctx.bonus + '\n\nЯ уверен, тебе понравится. А чтобы точно понравилось, попробуй к этом фильму вкус чипсов:\n' + sku, null, Markup
+	      	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.bonus + text.chips[0] + sku, null, Markup
 				    .keyboard([
 				      [
-				        Markup.button('выбрать новый фильм', 'primary')
+				        Markup.button(text.repeatBtnText[0], 'primary')
 				      ]
 				    ])
 				    .oneTime());

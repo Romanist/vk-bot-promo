@@ -4,17 +4,20 @@ const mongoose = require('mongoose');
 const request = require('request-promise')
 const Schema = mongoose.Schema;
 const Markup = require('../lib/markup')
+const text = require('./text')
 
 let User = require('./userShema')
 let Film = require('./filmShema')
 let Bonus = require('./bonusShema')
 
-async function generateBonus(cont, result, sku) {
+async function generateBonus(cont, result, sku, link) {
 	console.log('')
 	console.log('generation', result)
 	console.log('')
 	let userID = cont.message.from_id
 	console.log('generation', userID)
+	console.log(' ')
+	console.log('LINK ', link)
 
   let promise = Bonus.findOne({'used': false}, async function (err, user) {
     if (err) {
@@ -33,18 +36,18 @@ async function generateBonus(cont, result, sku) {
       console.log('out of codes!')
       console.log('____________________________________')
       if (!result) {
-      	cont.reply('Хмм, я ещё не нашёл идеальный фильм для тебя. Попробуй пройти тест ещё раз или выбери нужный тебе фильм по подарочному промокоду на сервисе VOKA.​', null, Markup
+      	cont.reply(text.badSearch[0], null, Markup
 			    .keyboard([
 			      [
-			        Markup.button('выбрать новый фильм', 'primary')
+			        Markup.button(text.repeatBtnText[0], 'primary')
 			      ]
 			    ])
 			    .oneTime());
       } else {
-      	cont.reply('Мне кажется, я узнал тебя чуточку лучше и подобрал фильм, который тебе подойдет\n\nТы готов? Тогда лови​: "' + result.Name + '" \n\nhttps://www.voka.tv/movies/' + result.Slug + '\n\nЯ уверен, тебе понравится. А чтобы точно понравилось, попробуй к этом фильму вкус чипсов:\n' + sku, null, Markup
+      	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.chips[0] + sku, null, Markup
 			    .keyboard([
 			      [
-			        Markup.button('выбрать новый фильм', 'primary')
+			        Markup.button(text.repeatBtnText[0], 'primary')
 			      ]
 			    ])
 			    .oneTime());
@@ -58,18 +61,18 @@ async function generateBonus(cont, result, sku) {
 			});
 
 			if (!result) {
-				cont.reply('Хмм, я ещё не нашёл идеальный фильм для тебя. Попробуй пройти тест ещё раз или выбери нужный тебе фильм по подарочному промокоду на сервисе VOKA.​\n' + ctx.promo, null, Markup
+				cont.reply(text.badSearch[0] + ctx.promo, null, Markup
 			    .keyboard([
 			      [
-			        Markup.button('выбрать новый фильм', 'primary')
+			        Markup.button(text.repeatBtnText[0], 'primary')
 			      ]
 			    ])
 			    .oneTime());
 			} else {
-				cont.reply('Мне кажется, я узнал тебя чуточку лучше и подобрал фильм, который тебе подойдет\n\nТы готов? Тогда лови​: "' + result.Name + '" \n\nhttps://www.voka.tv/movies/' + result.Slug + '\n\nАх, да, самое приятное! Держи свой персональный промокод на подписку от VOKA:\n' + ctx.promo + '\n\nЯ уверен, тебе понравится. А чтобы точно понравилось, попробуй к этом фильму вкус чипсов:\n' + sku, null, Markup
+				cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.promo + text.chips[0] + sku, null, Markup
 			    .keyboard([
 			      [
-			        Markup.button('выбрать новый фильм', 'primary')
+			        Markup.button(text.repeatBtnText[0], 'primary')
 			      ]
 			    ])
 			    .oneTime());

@@ -1,10 +1,11 @@
 const Markup = require('../lib/markup')
+const text = require('./text')
 
 async function step1(ctx) {
 	console.log('step 1')
 	console.log(' ')
 
-	ctx.reply('Отлично, я готов задать тебе первый вопрос.\n Скажи, сколько времени ты готов смотреть фильм?\n\n1 - Думаю, что найду часик времени на просмотр\n2 - Ответ на этот вопрос ты узнаешь в следующей серии!\n3 - А можно всё посмотреть?', null, Markup
+	ctx.reply(text.step1[0], null, Markup
     .keyboard([
       [
         Markup.button('1', 'primary', 1),

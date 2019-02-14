@@ -1,5 +1,6 @@
 const request = require('request-promise')
 const Markup = require('../lib/markup')
+const text = require('./text')
 
 async function step0(ctx) {
 	console.log('step 0')
@@ -14,7 +15,7 @@ async function step0(ctx) {
       		context = JSON.parse(context)
           let first_name = context.response[0].first_name;
           // text
-          ctx.reply('Привет, ' + first_name + ', я твой личный кинобот!', null, Markup
+          ctx.reply(text.step0[0] + first_name + text.step0[1], null, Markup
 				    .keyboard([
 				      [
 				        Markup.button('Го!', 'primary', 'го')

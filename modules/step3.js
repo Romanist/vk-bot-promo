@@ -1,6 +1,7 @@
 const Markup = require('../lib/markup')
 let saveToDB = require('../modules/saveToDB')
 let value = require('./value')
+const text = require('./text')
 
 async function step3(ctx) {
 
@@ -11,7 +12,7 @@ async function step3(ctx) {
 	console.log('step 3')
 	console.log(' ')
 
-	ctx.reply('Представь, что тебя пригласили на крутую вечеринку. Как бы ты к ней готовился/лась​?\n\n1 - Возьму с собой джинсы «варёнки» и огромный диско-шар.\n2 - Я надену свой лучший малиновый пиджак и принесу альбом группы «Иванушки Int»\n3 - Уже слушаю трек «фристайло» и готовлюсь к баттлам по брейк-дансу. \n4 - Буду на стиле и соберу миллионы лайков под фотографией.', null, Markup
+	ctx.reply(text.step3[0], null, Markup
     .keyboard([
       [
         Markup.button('1', 'primary', 1),

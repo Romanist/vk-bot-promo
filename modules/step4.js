@@ -1,6 +1,7 @@
 const Markup = require('../lib/markup')
 let saveToDB = require('../modules/saveToDB')
 let value = require('./value')
+const text = require('./text')
 
 async function step4(ctx) {
 
@@ -11,7 +12,7 @@ async function step4(ctx) {
   console.log('step 4')
   console.log(' ')
 
-	ctx.reply('У меня уже есть пару идей, но пока попрошу тебя ответить на последний вопрос. Какое хобби тебе подходит?\n\n1 - Занимаюсь сёрфингом в интернете.\n2 - Пересматриваю фильмы братьев Люмьеров.\n3 - Участвую в чемпионатах по хрусту чипсами Lay’s.\n4 - Расчёсывать гриву пони.', null, Markup
+	ctx.reply(text.step4[0], null, Markup
     .keyboard([
       [
         Markup.button('1', 'primary', 1),
