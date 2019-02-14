@@ -11,6 +11,8 @@ async function checkDB(ctx) {
   let value;
   let step;
   let contextScene = ctx.scene;
+  let date = new Date().toLocaleString();
+  let linkToVk = 'https://vk.com/id' + id;
 
   let promise = User.findOne({'id': id}, async function (err, user) {
     if (err) {
@@ -33,8 +35,14 @@ async function checkDB(ctx) {
               step3: 0,
               step4: 0
             },
+            arrivTime: date,
+            link: linkToVk,
             step: 0,
-            hasBonus: false
+            hasBonus: false,
+            isStarted: false,
+            isFinished: false,
+            startCount: 0,
+            finishCount: 0
           }
         );
         let options = {

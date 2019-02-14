@@ -22,6 +22,7 @@ let renew = require('./modules/renew')
 let checkAnswer = require('./modules/checkAnswer')
 let findFilm = require('./modules/findFilm')
 let errorMess = require('./modules/errorMess')
+let saveStats = require('./modules/saveStats')
 
 const app = express();
 let mongoDB = 'mongodb://someuser:abcd1234@ds127961.mlab.com:27961/filmsforvoka';
@@ -90,6 +91,7 @@ const scene = new Scene('meet',
       value.step4 = ctx.message.text
       console.log(value.step4)
       saveToDB(ctx, 4, value)
+      saveStats(ctx, 'finished')
     } else {
       errorMess(ctx)
       step4(ctx)

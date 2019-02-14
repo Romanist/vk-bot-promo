@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
     id: {type: String},
-    // link : {type: String},
-    // timeFirst : {type: String},
+    link : {type: String},
+    arrivTime : {type: String},
     value: {
       step1: 0,
       step2: 0,
@@ -19,8 +19,13 @@ let UserSchema = new Schema({
     last_name: {type: String},
     bonus: {type: String},
     hasBonus: {type: Boolean},
-    films: [String]
+    films: [String],
+    isStarted: {type: Boolean},
+    isFinished: {type: Boolean},
+    startCount: {type: Number},
+    finishCount: {type: Number}
 });
+
 let User = mongoose.model('User', UserSchema);
 
 module.exports = User;

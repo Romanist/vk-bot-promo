@@ -19,7 +19,7 @@ async function generateBonus(cont, result, sku, link, age) {
 	let userID = cont.message.from_id
 	console.log('generation', userID)
 	console.log(' ')
-	console.log('LINK ', link)
+	// console.log('LINK ', link)
 
   let promise = Bonus.findOne({'used': false}, async function (err, user) {
     if (err) {

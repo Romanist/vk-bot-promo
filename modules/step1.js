@@ -1,9 +1,11 @@
 const Markup = require('../lib/markup')
 const text = require('./text')
+let saveStats = require('./saveStats')
 
 async function step1(ctx) {
 	console.log('step 1')
 	console.log(' ')
+	saveStats(ctx, 'started')
 
 	ctx.reply(text.step1[0], null, Markup
     .keyboard([
