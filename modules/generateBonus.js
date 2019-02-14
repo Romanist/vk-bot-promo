@@ -10,7 +10,9 @@ let User = require('./userShema')
 let Film = require('./filmShema')
 let Bonus = require('./bonusShema')
 
-async function generateBonus(cont, result, sku, link) {
+const findEase = require('./findEase')
+
+async function generateBonus(cont, result, sku, link, age) {
 	console.log('')
 	console.log('generation', result)
 	console.log('')
@@ -36,13 +38,7 @@ async function generateBonus(cont, result, sku, link) {
       console.log('out of codes!')
       console.log('____________________________________')
       if (!result) {
-      	cont.reply(text.badSearch[0], null, Markup
-			    .keyboard([
-			      [
-			        Markup.button(text.repeatBtnText[0], 'primary')
-			      ]
-			    ])
-			    .oneTime());
+				findEase(cont, result, sku, link, age, ctx)
       } else {
       	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.chips[0] + sku, null, Markup
 			    .keyboard([
@@ -61,13 +57,7 @@ async function generateBonus(cont, result, sku, link) {
 			});
 
 			if (!result) {
-				cont.reply(text.badSearch[0] + ctx.promo, null, Markup
-			    .keyboard([
-			      [
-			        Markup.button(text.repeatBtnText[0], 'primary')
-			      ]
-			    ])
-			    .oneTime());
+				findEase(cont, result, sku, link, age, ctx)
 			} else {
 				cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.promo + text.chips[0] + sku, null, Markup
 			    .keyboard([

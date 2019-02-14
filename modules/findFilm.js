@@ -12,6 +12,7 @@ let Bonus = require('./bonusShema')
 let generateBonus = require('./generateBonus')
 
 const text = require('./text')
+const findEase = require('./findEase')
 
 async function findFilm(ctx, cont) {
 	console.log('findfilm')
@@ -156,7 +157,7 @@ async function generateFilm(data, ctx, cont) {
 
 	  Film.findOne(options).skip(random).exec(
 	    function (err, result) {
-      	generateBonus(cont, result, sku, link)
+      	generateBonus(cont, result, sku, link, age)
 	      console.log('')
 	      console.log('result ')
 	      console.log(result)
@@ -268,16 +269,8 @@ async function generateFilm2(data, ctx, cont) {
 
 	  Film.findOne(options).skip(random).exec(
 	    function (err, result) {
-	    	// generateBonus(cont)
-	      // Tada! random user
 	      if (!result) {
-	      	cont.reply(text.badSearch[0] + text.promo[0] + ctx.bonus + text.chips[0] + sku, null, Markup
-				    .keyboard([
-				      [
-				        Markup.button(text.repeatBtnText[0], 'primary')
-				      ]
-				    ])
-				    .oneTime());
+					findEase(cont, result, sku, link, age, ctx)
 	      } else {
 	      	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.bonus + text.chips[0] + sku, null, Markup
 				    .keyboard([
@@ -288,7 +281,6 @@ async function generateFilm2(data, ctx, cont) {
 				    .oneTime());
 	      }
 	      console.log(result)
-	      // cont.scene.leave();
 	    })
 	})
 }
