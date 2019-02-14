@@ -37,6 +37,7 @@ async function generateBonus(cont, result, sku, link, age) {
       console.log('____________________________________')
       console.log('out of codes!')
       console.log('____________________________________')
+      
       if (!result) {
 				findEase(cont, result, sku, link, age, ctx)
       } else {
