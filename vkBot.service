@@ -1,0 +1,14 @@
+[Unit]
+Description=Node.js VK ChatBot Http Server
+
+[Service]
+PIDFile=/tmp/vkbot-99.pid
+User=root
+Group=root
+Restart=always
+KillSignal=SIGQUIT
+WorkingDirectory=/var/www/VK-BOT/
+ExecStart=/var/www/VK-BOT/app.js
+
+[Install]
+WantedBy=multi-user.target
