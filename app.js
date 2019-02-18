@@ -23,6 +23,7 @@ let checkAnswer = require('./modules/checkAnswer')
 let findFilm = require('./modules/findFilm')
 let errorMess = require('./modules/errorMess')
 let saveStats = require('./modules/saveStats')
+let refreshStats = require('./modules/refreshStats')
 
 const app = express();
 let mongoDB = 'mongodb://someuser:abcd1234@ds127961.mlab.com:27961/filmsforvoka';
@@ -30,6 +31,11 @@ let mongoDB = 'mongodb://someuser:abcd1234@ds127961.mlab.com:27961/filmsforvoka'
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 let db = mongoose.connection;
+
+refreshStats()
+var timerId = setInterval(function() {
+  refreshStats()
+}, 300000);
 
 let User = require('./modules/userShema')
 let value = require('./modules/value')
