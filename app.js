@@ -55,7 +55,10 @@ const scene = new Scene('meet',
     step0(ctx)
   },
   (ctx) => {
+    // console.log('heh')
     ctx.session.step = 1;
+    // let textBlockNumber = Math.floor(Math.random() * 4)
+    // ctx.session.textBlockNumber = textBlockNumber; 
     if (checkAnswer(1, ctx)) {
       ctx.scene.next()
       step1(ctx)

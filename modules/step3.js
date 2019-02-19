@@ -8,11 +8,12 @@ async function step3(ctx) {
   value.step2 = ctx.message.text
   console.log(value.step2)
   saveToDB(ctx, 2, value)
+  let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
 
 	console.log('step 3')
 	console.log(' ')
 
-	ctx.reply(text.step3[0], null, Markup
+	ctx.reply(text.textBlocks[textBlockNumber].step3[0], null, Markup
     .keyboard([
       [
         Markup.button('1', 'primary', 1),
