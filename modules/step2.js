@@ -3,12 +3,22 @@ let saveToDB = require('../modules/saveToDB')
 let value = require('./value')
 const text = require('./text')
 
-async function step2(ctx) {
+async function step2(ctx, bool) {
 
-  value.step1 = ctx.message.text
-  console.log(value.step1)
-  saveToDB(ctx, 1, value)
+  
+  console.log('step1')
+  console.log(' ')
+  // console.log(value.step1, !bool)
+  if (bool === true) {
+    console.log('nosave!')
+  }
+  else if (!bool) {
+    console.log('save')
+    value.step1 = ctx.message.text
+    saveToDB(ctx, 1, value)
+  }
   let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
+  // console.log(textBlockNumber, ctx.session.textBlockNumber)
 
 	console.log('step 2')
 	console.log(' ')

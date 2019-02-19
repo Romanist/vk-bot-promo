@@ -68,35 +68,34 @@ const scene = new Scene('meet',
     }
   },
   (ctx) => {
-    console.log(ctx.session.boolCheck)
     ctx.session.step = 2;
     if (checkAnswer(2, ctx)) {
       step2(ctx)
     } else {
-      if (ctx.session.boolCheck) step1(ctx)      
+      if (ctx.session.boolCheck) step1(ctx, true)      
       else {
-        if (ctx.message.text === text.repeatBtnText[0]) {step1(ctx);ctx.scene.step=1}
+        if (ctx.message.text === text.repeatBtnText[0]) step1(ctx)
         else errorMess(ctx)
       }        
     }
   },
   (ctx) => {
-    console.log(ctx.session.boolCheck)
     ctx.session.step = 3;
     if (checkAnswer(2, ctx)) {
       step3(ctx)
     } else {
-      if (ctx.session.boolCheck) {step2(ctx);ctx.scene.step=2}
+      ctx.scene.step=3
+      if (ctx.session.boolCheck) {step2(ctx, true);}
       else errorMess(ctx)
     }
   },
   (ctx) => {
-    console.log(ctx.session.boolCheck)
     ctx.session.step = 4;
     if (checkAnswer(2, ctx)) {
       step4(ctx)
     } else {
-      if (ctx.session.boolCheck) {step3(ctx);ctx.scene.step=3}
+      ctx.scene.step=4
+      if (ctx.session.boolCheck) {step3(ctx, true);}
       else errorMess(ctx)
     }
   },
@@ -108,11 +107,13 @@ const scene = new Scene('meet',
       saveToDB(ctx, 4, value)
       saveStats(ctx, 'finished')
     } else {
-      if (ctx.session.boolCheck) {step4(ctx);ctx.scene.step=4}
+      ctx.scene.step=5
+      if (ctx.session.boolCheck) {step4(ctx, true);}
       else errorMess(ctx)
     }
   },
   (ctx) => {
+    console.log('ctx.scene.step: ', ctx.scene.step)
     ctx.session.step = 6;
     ctx.scene.leave()
     ctx.scene.enter('meet', 2)

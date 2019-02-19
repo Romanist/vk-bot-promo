@@ -2,7 +2,7 @@ const Markup = require('../lib/markup')
 const text = require('./text')
 let saveStats = require('./saveStats')
 
-async function step1(ctx) {
+async function step1(ctx, bool) {
 
 	let textBlockNumber = Math.floor(Math.random() * 4)
   ctx.session.textBlockNumber = textBlockNumber; 
