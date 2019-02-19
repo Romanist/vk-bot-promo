@@ -23,6 +23,8 @@ async function step4(ctx) {
       ]
     ])
     .oneTime());
+
+  ctx.session.boolCheck = false
 }
 
 module.exports = step4;

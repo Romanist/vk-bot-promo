@@ -24,6 +24,7 @@ let findFilm = require('./modules/findFilm')
 let errorMess = require('./modules/errorMess')
 let saveStats = require('./modules/saveStats')
 let refreshStats = require('./modules/refreshStats')
+let text = require('./modules/text')
 
 const app = express();
 let mongoDB = 'mongodb://someuser:abcd1234@ds127961.mlab.com:27961/filmsforvoka';
@@ -50,48 +51,53 @@ let numbOfQuestions = questObj.length;
 const scene = new Scene('meet',
   (ctx) => {
     ctx.session.step = 0;
+    ctx.session.boolCheck = false;
     ctx.session.value = {};
-    ctx.scene.next()
+    // ctx.scene.next()
     step0(ctx)
   },
   (ctx) => {
-    // console.log('heh')
     ctx.session.step = 1;
-    // let textBlockNumber = Math.floor(Math.random() * 4)
-    // ctx.session.textBlockNumber = textBlockNumber; 
+    ctx.session.boolCheck = false;
     if (checkAnswer(1, ctx)) {
-      ctx.scene.next()
+      // ctx.scene.next()
       step1(ctx)
     } else {
-      errorMess(ctx)
-      step0(ctx)
+      if (ctx.session.boolCheck) step0(ctx)
+      else errorMess(ctx)
     }
   },
   (ctx) => {
+    console.log(ctx.session.boolCheck)
     ctx.session.step = 2;
     if (checkAnswer(2, ctx)) {
       step2(ctx)
     } else {
-      // errorMess(ctx)
-      step1(ctx)
+      if (ctx.session.boolCheck) step1(ctx)      
+      else {
+        if (ctx.message.text === text.repeatBtnText[0]) {step1(ctx);ctx.scene.step=1}
+        else errorMess(ctx)
+      }        
     }
   },
   (ctx) => {
+    console.log(ctx.session.boolCheck)
     ctx.session.step = 3;
     if (checkAnswer(2, ctx)) {
       step3(ctx)
     } else {
-      errorMess(ctx)
-      step2(ctx)
+      if (ctx.session.boolCheck) {step2(ctx);ctx.scene.step=2}
+      else errorMess(ctx)
     }
   },
   (ctx) => {
+    console.log(ctx.session.boolCheck)
     ctx.session.step = 4;
     if (checkAnswer(2, ctx)) {
       step4(ctx)
     } else {
-      errorMess(ctx)
-      step3(ctx)
+      if (ctx.session.boolCheck) {step3(ctx);ctx.scene.step=3}
+      else errorMess(ctx)
     }
   },
   (ctx) => {
@@ -102,8 +108,8 @@ const scene = new Scene('meet',
       saveToDB(ctx, 4, value)
       saveStats(ctx, 'finished')
     } else {
-      errorMess(ctx)
-      step4(ctx)
+      if (ctx.session.boolCheck) {step4(ctx);ctx.scene.step=4}
+      else errorMess(ctx)
     }
   },
   (ctx) => {

@@ -25,6 +25,8 @@ async function step1(ctx) {
       ]
     ])
     .oneTime());
+
+	ctx.session.boolCheck = false
 }
 
 module.exports = step1;
