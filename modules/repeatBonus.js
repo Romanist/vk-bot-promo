@@ -12,11 +12,11 @@ let User = require('./userShema')
 let Film = require('./filmShema')
 let Bonus = require('./bonusShema')
 
-function repeatBonus(cont, result, sku, link, age, ctx, data) {
+function repeatBonus(cont, result, sku, link, age, ctx, data, skuNumber) {
 	if (!result) {
 		findEase(cont, result, sku, link, age, ctx)
   } else {
-  	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.bonus + text.chips[0] + sku, null, Markup
+  	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.bonus + text.chips[0] + text.chipstaste[skuNumber] + text.final[0], sku, Markup
 	    .keyboard([
 	      [
 	        Markup.button(text.repeatBtnText[0], 'primary')

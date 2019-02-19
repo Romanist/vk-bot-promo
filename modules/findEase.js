@@ -11,7 +11,7 @@ let User = require('./userShema')
 let Film = require('./filmShema')
 let Bonus = require('./bonusShema')
 
-function findEase(cont, result, sku, link, age, ctx) {
+function findEase(cont, result, sku, link, age, ctx, skuNumber) {
 	link = text.movieLink[0]
 	options = {
 		Age: { $gte: 0, $lte: age },
@@ -27,7 +27,7 @@ function findEase(cont, result, sku, link, age, ctx) {
 
 	  Film.findOne(options).skip(random).exec(
 	    function (err, result) {
-      	cont.reply(text.badSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.bonus + text.chips[0] + sku, null, Markup
+      	cont.reply(text.badSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.bonus + text.chips[0] + text.chipstaste[skuNumber] + text.final[0], sku, Markup
 		    .keyboard([
 		      [
 		        Markup.button(text.repeatBtnText[0], 'primary')

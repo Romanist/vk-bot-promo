@@ -76,9 +76,12 @@ async function generateFilm(data, ctx, cont) {
 
  	let age = value.step4 === '4' ? 6 : 100;
 
- 	let sku = value.step2 === '1' ? 'Комедия SKU' :
- 		value.step2 === '2' ? 'Экшн SKU' : 
- 		value.step2 === '3' ? 'Sci-fy SKU' : 'Романтика SKU';	
+ 	let sku = value.step2 === '1' ? 'https://vk.com/public177040120?z=photo-177040120_456239021%2Falbum-177040120_260066210' :
+ 		value.step2 === '2' ? 'https://vk.com/public177040120?z=photo-177040120_456239020%2Falbum-177040120_260066210' : 
+ 		value.step2 === '3' ? 'https://vk.com/public177040120?z=photo-177040120_456239022%2Falbum-177040120_260066210' : 'https://vk.com/public177040120?z=photo-177040120_456239023%2Falbum-177040120_260066210';
+ 	let skuNumber = value.step2 === '1' ? 0 :
+ 		value.step2 === '2' ? 1 : 
+ 		value.step2 === '3' ? 2 : 3;
 
  	let link = (value.step1 === '2') ? text.seriesLink[0] : text.movieLink[0]
 
@@ -145,7 +148,7 @@ async function generateFilm(data, ctx, cont) {
 
 		  Film.findOne(options).skip(random).exec(
 		    function (err, result) {
-		    	if (!result) findEase(cont, result, sku, link, age, ctx)
+		    	if (!result) findEase(cont, result, sku, link, age, ctx, skuNumber)
 		    	else {
 		    		if (counter >= 10) {
 			    		data.films = []
@@ -155,9 +158,9 @@ async function generateFilm(data, ctx, cont) {
 			    		return false
 			    	}
 			    	if (data.hasBonus) {
-			    		repeatBonus(cont, result, sku, link, age, ctx, data)
+			    		repeatBonus(cont, result, sku, link, age, ctx, data, skuNumber)
 			    	}	else {
-		      		generateBonus(cont, result, sku, link, age)
+		      		generateBonus(cont, result, sku, link, age, skuNumber)
 			    		data.hasBonus = true
 			    		data.save((err) => {
 								if (err) {
