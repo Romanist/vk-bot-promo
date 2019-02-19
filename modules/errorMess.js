@@ -1,6 +1,8 @@
+const text = require('./text')
+
 async function errorMess(ctx) {
   
-	ctx.reply('Ввод не распознан, попробуйте ещё раз\n\n')
+	ctx.reply(text.error[0])
 
 }
 

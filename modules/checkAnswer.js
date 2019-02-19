@@ -7,6 +7,30 @@ function checkAnswer(check, ctx) {
 		    (ctx.message.text === 'Go') ||
 		    (ctx.message.text === 'Go!') ||
 		    (ctx.message.text === 'го') ||
+		    (ctx.message.text === 'гоу') ||
+		    (ctx.message.text === 'начнем') ||
+		    (ctx.message.text === 'начнём') ||
+		    (ctx.message.text === 'привет') ||
+		    (ctx.message.text === 'да') ||
+		    (ctx.message.text === 'нет') ||
+		    (ctx.message.text === 'yes') ||
+		    (ctx.message.text === 'no') ||
+		    (ctx.message.text === 'hello') ||
+		    (ctx.message.text === 'hi') ||
+		    (ctx.message.text === 'здравствуй') ||
+		    (ctx.message.text === 'здравствуйте') ||
+		    (ctx.message.text === 'гоу!') ||
+		    (ctx.message.text === 'начнем!') ||
+		    (ctx.message.text === 'начнём!') ||
+		    (ctx.message.text === 'привет!') ||
+		    (ctx.message.text === 'да!') ||
+		    (ctx.message.text === 'нет!') ||
+		    (ctx.message.text === 'yes!') ||
+		    (ctx.message.text === 'no!') ||
+		    (ctx.message.text === 'hello!') ||
+		    (ctx.message.text === 'hi!') ||
+		    (ctx.message.text === 'здравствуй!') ||
+		    (ctx.message.text === 'здравствуйте!') ||
 		    (ctx.message.text === 'go!')) {
 			return true;
 		} else {

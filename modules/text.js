@@ -12,7 +12,8 @@ let text = {
 	final : ['\n\nПройди тест еще раз, если хочешь найти другой фильм.\n'],
 	repeatBtnText : ['выбрать новый фильм'],
 	movieLink : ['" \n\nhttps://www.voka.tv/movies/'],
-	seriesLink : ['" \n\nhttps://www.voka.tv/series/']
+	seriesLink : ['" \n\nhttps://www.voka.tv/series/'],
+	error : ['Я тебя не совсем понял. Попробуй ввести свой вариант ответа еще раз.']
 }
 
 
