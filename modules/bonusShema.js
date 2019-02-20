@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 let promoShema = new Schema({
     promo: {type: String, required: true, max: 30},
-    used: {type: Boolean, required: true}
+    used: {type: String, required: true}
 });
 let Promo = mongoose.model('Promo', promoShema);
 

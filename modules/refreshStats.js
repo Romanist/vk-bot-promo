@@ -185,11 +185,11 @@ function refreshStats() {
 	    if (!stats) {
 	      let stats = new Stats(
 	        {
-					    bonuses: bonuses,
-					    user0th: user0th,
-					    user1st: user1st,
-					    user1stStarts: user1stStarts,
-					    user5th: user5th,
+					    usedBonuses: bonuses,
+					    uniqUser: user0th,
+					    uniqPassing: user1st,
+					    everyPassing: user1stStarts,
+					    uniqPassed: user5th,
 					}	      
 				);
 	      stats.save(function (err) {
@@ -198,11 +198,11 @@ function refreshStats() {
 	        }
 	      });
 	    } else {
-	      stats.bonuses = bonuses;
-	      stats.user0th = user0th;
-	      stats.user1st = user1st;
-	      stats.user1stStarts = user1stStarts;
-	      stats.user5th = user5th;
+	      stats.usedBonuses = bonuses;
+	      stats.uniqUser = user0th;
+	      stats.uniqPassing = user1st;
+	      stats.everyPassing = user1stStarts;
+	      stats.uniqPassed = user5th;
 	      stats.save(function (err) {
 	          if(err) {
 	              console.error('ERROR!', err);

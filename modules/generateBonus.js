@@ -21,7 +21,7 @@ async function generateBonus(cont, result, sku, link, age, skuNumber) {
 	console.log(' ')
 	// console.log('LINK ', link)
 
-  let promise = Bonus.findOne({'used': false}, async function (err, user) {
+  let promise = Bonus.findOne({'used': 'false'}, async function (err, user) {
     if (err) {
       if(err.code == 11000) {
         return console.log('null here', null);

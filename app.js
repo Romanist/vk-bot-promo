@@ -53,14 +53,14 @@ const scene = new Scene('meet',
     ctx.session.step = 0;
     ctx.session.boolCheck = false;
     ctx.session.value = {};
-    // ctx.scene.next()
+    ctx.scene.next()
     step0(ctx)
   },
   (ctx) => {
     ctx.session.step = 1;
     ctx.session.boolCheck = false;
     if (checkAnswer(1, ctx)) {
-      // ctx.scene.next()
+      ctx.scene.next()
       step1(ctx)
     } else {
       if (ctx.session.boolCheck) step0(ctx)
@@ -69,19 +69,19 @@ const scene = new Scene('meet',
   },
   (ctx) => {
     ctx.session.step = 2;
-    if (checkAnswer(2, ctx)) {
+    if ((checkAnswer(2, ctx) && (!ctx.session.boolCheck))) {
       step2(ctx)
     } else {
       if (ctx.session.boolCheck) step1(ctx, true)      
       else {
-        if (ctx.message.text === text.repeatBtnText[0]) step1(ctx)
-        else errorMess(ctx)
+        // if (ctx.message.text === text.repeatBtnText[0]) step1(ctx)
+        errorMess(ctx)
       }        
     }
   },
   (ctx) => {
     ctx.session.step = 3;
-    if (checkAnswer(2, ctx)) {
+    if ((checkAnswer(2, ctx) && (!ctx.session.boolCheck))) {
       step3(ctx)
     } else {
       ctx.scene.step=3
@@ -91,7 +91,7 @@ const scene = new Scene('meet',
   },
   (ctx) => {
     ctx.session.step = 4;
-    if (checkAnswer(2, ctx)) {
+    if ((checkAnswer(2, ctx) && (!ctx.session.boolCheck))) {
       step4(ctx)
     } else {
       ctx.scene.step=4
@@ -101,8 +101,9 @@ const scene = new Scene('meet',
   },
   (ctx) => {
     ctx.session.step = 5;
-    if (checkAnswer(2, ctx)) {
+    if ((checkAnswer(2, ctx) && (!ctx.session.boolCheck))) {
       value.step4 = ctx.message.text
+      ctx.reply(text.waiting[0])
       console.log(value.step4)
       saveToDB(ctx, 4, value)
       saveStats(ctx, 'finished')
@@ -116,7 +117,7 @@ const scene = new Scene('meet',
     console.log('ctx.scene.step: ', ctx.scene.step)
     ctx.session.step = 6;
     ctx.scene.leave()
-    ctx.scene.enter('meet', 2)
+    ctx.scene.enter('meet', 1)
   }
 )
 

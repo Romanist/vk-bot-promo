@@ -18,7 +18,7 @@ async function step0(ctx) {
           ctx.reply(text.step0[0] + first_name + text.step0[1], null, Markup
 				    .keyboard([
 				      [
-				        Markup.button('Го!', 'primary', 'го')
+				        Markup.button('Начнём!', 'primary', 'Начнём!')
 				      ]
 				    ])
 				    .oneTime());
