@@ -10,6 +10,11 @@ async function saveStats(ctx, data) {
   let _ctx = ctx
   let contextScene = ctx.scene;
   let id = ctx.message.from_id;
+  console.log('_________________________________________________')
+  console.log('_________________________________________________')
+  console.log('SAVESTATS', data)
+  console.log('_________________________________________________')
+  console.log('_________________________________________________')
 
   let promise = User.findOne({'id': id}, function (err, user) {
     if (err) {

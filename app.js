@@ -50,6 +50,7 @@ let numbOfQuestions = questObj.length;
 
 const scene = new Scene('meet',
   (ctx) => {
+    ctx.session.checkNumber = []
     ctx.session.step = 0;
     ctx.session.boolCheck = false;
     ctx.session.value = {};
@@ -73,10 +74,7 @@ const scene = new Scene('meet',
       step2(ctx)
     } else {
       if (ctx.session.boolCheck) step1(ctx, true)      
-      else {
-        // if (ctx.message.text === text.repeatBtnText[0]) step1(ctx)
-        errorMess(ctx)
-      }        
+      else errorMess(ctx)     
     }
   },
   (ctx) => {
@@ -85,7 +83,7 @@ const scene = new Scene('meet',
       step3(ctx)
     } else {
       ctx.scene.step=3
-      if (ctx.session.boolCheck) {step2(ctx, true);}
+      if (ctx.session.boolCheck) step2(ctx, true)
       else errorMess(ctx)
     }
   },
@@ -95,7 +93,7 @@ const scene = new Scene('meet',
       step4(ctx)
     } else {
       ctx.scene.step=4
-      if (ctx.session.boolCheck) {step3(ctx, true);}
+      if (ctx.session.boolCheck) step3(ctx, true)
       else errorMess(ctx)
     }
   },
@@ -103,13 +101,13 @@ const scene = new Scene('meet',
     ctx.session.step = 5;
     if ((checkAnswer(2, ctx) && (!ctx.session.boolCheck))) {
       value.step4 = ctx.message.text
+      saveStats(ctx, 'finished')
       ctx.reply(text.waiting[0])
       console.log(value.step4)
       saveToDB(ctx, 4, value)
-      saveStats(ctx, 'finished')
     } else {
       ctx.scene.step=5
-      if (ctx.session.boolCheck) {step4(ctx, true);}
+      if (ctx.session.boolCheck) step4(ctx, true)
       else errorMess(ctx)
     }
   },

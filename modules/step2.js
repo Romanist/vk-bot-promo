@@ -1,6 +1,7 @@
 const Markup = require('../lib/markup')
 let saveToDB = require('../modules/saveToDB')
 let value = require('./value')
+let saveStats = require('./saveStats')
 const text = require('./text')
 
 async function step2(ctx, bool) {
@@ -16,6 +17,7 @@ async function step2(ctx, bool) {
     console.log('save')
     value.step1 = ctx.message.text
     saveToDB(ctx, 1, value)
+    saveStats(ctx, 'started')
   }
   let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
   // console.log(textBlockNumber, ctx.session.textBlockNumber)

@@ -1,20 +1,38 @@
 const Markup = require('../lib/markup')
 const text = require('./text')
-let saveStats = require('./saveStats')
 
 async function step1(ctx, bool) {
 
 	let textBlockNumber = Math.floor(Math.random() * 4)
-  ctx.session.textBlockNumber = textBlockNumber; 
+	
+	
+	function checkArray(item) {
+		console.log('')
+		console.log(ctx.session.checkNumber)
+		if (!ctx.session.checkNumber) ctx.session.checkNumber = []
+		console.log(ctx.session.checkNumber)
+		console.log(ctx.session.checkNumber.length)
+		console.log(ctx.session.checkNumber.length >= 3)
+		if (ctx.session.checkNumber.length >= 3) {
+			ctx.session.checkNumber = []
+		}
+		if (ctx.session.checkNumber.includes(item)) {
+			textBlockNumber = Math.floor(Math.random() * 4)
+			checkArray(textBlockNumber)
+		}
+		ctx.session.checkNumber.push(textBlockNumber)
+		console.log('')
+		console.log(textBlockNumber)
+		console.log('')
+		console.log(ctx.session.checkNumber)
+		console.log('')
+	}
+
+	checkArray(textBlockNumber)
+  
 
 	console.log('step 1')
 	console.log(' ')
-  // console.log(ctx.session.textBlockNumber)
-  // console.log(' ')
-	saveStats(ctx, 'started')
-  // let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
-  // console.log(' ')
-  // console.log(textBlockNumber)
 
 	ctx.reply(text.textBlocks[textBlockNumber].step1[0], null, Markup
     .keyboard([
