@@ -41,7 +41,9 @@ async function generateBonus(cont, result, sku, link, age, skuNumber) {
       if (!result) {
 				findEase(cont, result, sku, link, age, ctx)
       } else {
-      	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.chips[0] + text.chipstaste[skuNumber] + text.final[0], sku, Markup
+      	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.chips[0] + text.chipstaste[skuNumber], sku);
+
+      	cont.reply(text.final[0], null, Markup
 			    .keyboard([
 			      [
 			        Markup.button(text.repeatBtnText[0], 'primary')
@@ -60,7 +62,8 @@ async function generateBonus(cont, result, sku, link, age, skuNumber) {
 			if (!result) {
 				findEase(cont, result, sku, link, age, ctx)
 			} else {
-				cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.promo + text.chips[0] + text.chipstaste[skuNumber] + text.final[0], sku, Markup
+				cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.chips[0] + text.chipstaste[skuNumber], sku);
+				cont.reply(text.promo[0] + ctx.promo + text.prefinal[0] + text.final[0], null, Markup
 			    .keyboard([
 			      [
 			        Markup.button(text.repeatBtnText[0], 'primary')

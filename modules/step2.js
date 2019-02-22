@@ -14,7 +14,6 @@ async function step2(ctx, bool) {
     console.log('nosave!')
   }
   else if (!bool) {
-    console.log('save')
     value.step1 = ctx.message.text
     saveToDB(ctx, 1, value)
     saveStats(ctx, 'started')

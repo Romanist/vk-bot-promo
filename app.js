@@ -70,7 +70,7 @@ const scene = new Scene('meet',
   },
   (ctx) => {
     ctx.session.step = 2;
-    if ((checkAnswer(2, ctx) && (!ctx.session.boolCheck))) {
+    if ((checkAnswer(3, ctx) && (!ctx.session.boolCheck))) {
       step2(ctx)
     } else {
       if (ctx.session.boolCheck) step1(ctx, true)      
@@ -137,4 +137,4 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.post('/', bot.webhookCallback);
 
-app.listen(80);
+app.listen(2200);

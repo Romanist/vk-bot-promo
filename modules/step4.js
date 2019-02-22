@@ -13,7 +13,6 @@ async function step4(ctx, bool) {
     console.log('nosave!')
   }
   else if (!bool) {
-    console.log('save')
     value.step3 = ctx.message.text
     saveToDB(ctx, 3, value)
   }

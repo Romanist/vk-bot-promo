@@ -76,9 +76,9 @@ async function generateFilm(data, ctx, cont) {
 
  	let age = value.step4 === '4' ? 6 : 100;
 
- 	let sku = value.step2 === '1' ? 'https://vk.com/public177040120?z=photo-177040120_456239021%2Falbum-177040120_260066210' :
- 		value.step2 === '2' ? 'https://vk.com/public177040120?z=photo-177040120_456239020%2Falbum-177040120_260066210' : 
- 		value.step2 === '3' ? 'https://vk.com/public177040120?z=photo-177040120_456239022%2Falbum-177040120_260066210' : 'https://vk.com/public177040120?z=photo-177040120_456239023%2Falbum-177040120_260066210';
+ 	let sku = value.step2 === '1' ? 'https://vk.com/public177040120?z=photo-177040120_456239024%2Falbum-177040120_260066210' :
+ 		value.step2 === '2' ? 'https://vk.com/public177040120?z=photo-177040120_456239025%2Falbum-177040120_260066210' : 
+ 		value.step2 === '3' ? 'https://vk.com/public177040120?z=photo-177040120_456239027%2Falbum-177040120_260066210' : 'https://vk.com/public177040120?z=photo-177040120_456239026%2Falbum-177040120_260066210';
  	let skuNumber = value.step2 === '1' ? 0 :
  		value.step2 === '2' ? 1 : 
  		value.step2 === '3' ? 2 : 3;
