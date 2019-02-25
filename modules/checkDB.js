@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 let User = require('./userShema')
 
 async function checkDB(ctx) {
+  let session = ctx.session
   let id = ctx.message.from_id;
   let value;
   let step;
@@ -76,7 +77,9 @@ async function checkDB(ctx) {
     if (curStep) {
       curStep = curStep + 2
       // contextScene.value = 
-      console.log(ctx)
+      // console.log(ctx)
+      session.value = ctx.value
+      // console.log(session)
       contextScene.enter('meet', [curStep])
     } else {
       contextScene.enter('meet')

@@ -32,7 +32,7 @@ function repeatBonus(cont, result, sku, link, age, ctx, data, skuNumber) {
 			}
 		})
   }
-  console.log(result)
+  // console.log(result)
 }
 
 module.exports = repeatBonus;

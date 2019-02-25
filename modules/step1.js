@@ -5,6 +5,8 @@ async function step1(ctx, bool) {
 
 	let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0
 
+  if (!ctx.session.value) ctx.session.value = {}
+
   if (!bool) {
     checkArray(textBlockNumber)
     textBlockNumber = Math.floor(Math.random() * 4)
@@ -21,10 +23,7 @@ async function step1(ctx, bool) {
       ctx.session.checkNumber.push(textBlockNumber)
       ctx.session.textBlockNumber = textBlockNumber
     }
-  }  
-
-	console.log('step 1')
-	console.log(' ')
+  }
 
 	ctx.reply(text.textBlocks[ctx.session.textBlockNumber].step1[0], null, Markup
     .keyboard([

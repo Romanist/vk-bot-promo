@@ -5,22 +5,15 @@ const text = require('./text')
 
 async function step3(ctx, bool) {
 
-  
-  console.log('step2')
-  console.log(' ')
-  // console.log(value.step2, !bool)
-  if (bool === true) {
-    console.log('nosave!')
-  }
-  else if (!bool) {
+  if (!ctx.session.value) ctx.session.value = {}
+
+  if (!bool) {
     value.step2 = ctx.message.text
+    ctx.session.value.step2 = ctx.message.text
     saveToDB(ctx, 2, value)
   }
-  let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
-  // console.log(textBlockNumber, ctx.session.textBlockNumber)
 
-	console.log('step 3')
-	console.log(' ')
+  let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
 
 	ctx.reply(text.textBlocks[textBlockNumber].step3[0], null, Markup
     .keyboard([

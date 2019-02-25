@@ -16,7 +16,6 @@ let generateBonus = require('./generateBonus')
 let repeatBonus = require('./repeatBonus')
 
 async function findFilm(ctx, cont) {
-	console.log('findfilm')
   let id = ctx.id;
   let value;
   let step;
@@ -32,7 +31,6 @@ async function findFilm(ctx, cont) {
       }
     }
     if (!user) {
-      console.log('noUSER')
       ctx.scene.leave()
 			ctx.scene.enter('meet', 1)
     }   
@@ -53,47 +51,36 @@ async function findFilm(ctx, cont) {
 async function generateFilm(data, ctx, cont) {
 	let value = data.value
 	let _ctx = ctx
-	console.log(value)
 
- 	let category = (value.step1 === '2') ? 2 : 1;
+	let category = (cont.session.value.step1 === '2') ? 2 : 1;
 
- 	let genre1 = value.step2 === '1' ? 'Комедия' :
- 		value.step2 === '2' ? 'Триллер' : 
- 		value.step2 === '3' ? 'Ужасы' : 'Драма';
- 	let genre2 = value.step2 === '1' ? 'Комедия' :
- 		value.step2 === '2' ? 'Боевик' : 
- 		value.step2 === '3' ? 'Фантастика' : 'Мелодрама';
- 	let genre3 = value.step2 === '1' ? 'Комедия' :
- 		value.step2 === '2' ? 'Криминал' : 
- 		value.step2 === '3' ? 'Ужасы' : 'Драма';
+ 	let genre1 = cont.session.value.step2 === '1' ? 'Комедия' :
+ 		cont.session.value.step2 === '2' ? 'Триллер' : 
+ 		cont.session.value.step2 === '3' ? 'Ужасы' : 'Драма';
+ 	let genre2 = cont.session.value.step2 === '1' ? 'Комедия' :
+ 		cont.session.value.step2 === '2' ? 'Боевик' : 
+ 		cont.session.value.step2 === '3' ? 'Фантастика' : 'Мелодрама';
+ 	let genre3 = cont.session.value.step2 === '1' ? 'Комедия' :
+ 		cont.session.value.step2 === '2' ? 'Криминал' : 
+ 		cont.session.value.step2 === '3' ? 'Ужасы' : 'Драма';
 
- 	let yearStart = value.step3 === '1' ? 0 : 
- 		value.step3 === '2' ? 1990 : 
- 		value.step3 === '3' ? 2000 : 2010;
- 	let yearEnd = value.step3 === '1' ? 1989 : 
- 		value.step3 === '2' ? 1999 : 
- 		value.step3 === '3' ? 2009 : 2019;
+ 	let yearStart = cont.session.value.step3 === '1' ? 0 : 
+ 		cont.session.value.step3 === '2' ? 1990 : 
+ 		cont.session.value.step3 === '3' ? 2000 : 2010;
+ 	let yearEnd = cont.session.value.step3 === '1' ? 1989 : 
+ 		cont.session.value.step3 === '2' ? 1999 : 
+ 		cont.session.value.step3 === '3' ? 2009 : 2019;
 
- 	let age = value.step4 === '4' ? 6 : 100;
+ 	let age = cont.session.value.step4 === '4' ? 6 : 100;
 
- 	let sku = value.step2 === '1' ? 'https://vk.com/public177040120?z=photo-177040120_456239024%2Falbum-177040120_260066210' :
- 		value.step2 === '2' ? 'https://vk.com/public177040120?z=photo-177040120_456239025%2Falbum-177040120_260066210' : 
- 		value.step2 === '3' ? 'https://vk.com/public177040120?z=photo-177040120_456239027%2Falbum-177040120_260066210' : 'https://vk.com/public177040120?z=photo-177040120_456239026%2Falbum-177040120_260066210';
- 	let skuNumber = value.step2 === '1' ? 0 :
- 		value.step2 === '2' ? 1 : 
- 		value.step2 === '3' ? 2 : 3;
+ 	let sku = cont.session.value.step2 === '1' ? 'https://vk.com/public177040120?z=photo-177040120_456239024%2Falbum-177040120_260066210' :
+ 		cont.session.value.step2 === '2' ? 'https://vk.com/public177040120?z=photo-177040120_456239025%2Falbum-177040120_260066210' : 
+ 		cont.session.value.step2 === '3' ? 'https://vk.com/public177040120?z=photo-177040120_456239027%2Falbum-177040120_260066210' : 'https://vk.com/public177040120?z=photo-177040120_456239026%2Falbum-177040120_260066210';
+ 	let skuNumber = cont.session.value.step2 === '1' ? 0 :
+ 		cont.session.value.step2 === '2' ? 1 : 
+ 		cont.session.value.step2 === '3' ? 2 : 3;
 
- 	let link = (value.step1 === '2') ? text.seriesLink[0] : text.movieLink[0]
-
- 	console.log('')
- 	console.log(category)
- 	console.log('')
- 	console.log(genre1, genre2, genre3)
- 	console.log('')
- 	console.log(yearStart, yearEnd)
- 	console.log('')
- 	console.log(age)
- 	console.log('')
+ 	let link = (cont.session.value.step1 === '2') ? text.seriesLink[0] : text.movieLink[0]
 
  	let options = {
   	'Production year': { $gte: yearStart, $lte: yearEnd },
@@ -141,7 +128,6 @@ async function generateFilm(data, ctx, cont) {
   }
 
   function search() {
-  	console.log('SEARCHSTARTED')
 		Film.count(options).exec(function (err, count) {
 
 		  var random = Math.floor(Math.random() * count)

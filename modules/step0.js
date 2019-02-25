@@ -3,8 +3,6 @@ const Markup = require('../lib/markup')
 const text = require('./text')
 
 async function step0(ctx) {
-	console.log('step 0')
-	console.log(' ')
 	
 	let options = {
       method: 'GET',

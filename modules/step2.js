@@ -6,23 +6,16 @@ const text = require('./text')
 
 async function step2(ctx, bool) {
 
-  
-  console.log('step1')
-  console.log(' ')
-  // console.log(value.step1, !bool)
-  if (bool === true) {
-    console.log('nosave!')
-  }
-  else if (!bool) {
+  if (!ctx.session.value) ctx.session.value = {}
+
+  if (!bool) {
     value.step1 = ctx.message.text
+    ctx.session.value.step1 = ctx.message.text
     saveToDB(ctx, 1, value)
     saveStats(ctx, 'started')
   }
-  let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
-  // console.log(textBlockNumber, ctx.session.textBlockNumber)
 
-	console.log('step 2')
-	console.log(' ')
+  let textBlockNumber = ctx.session.textBlockNumber ? ctx.session.textBlockNumber : 0;
   
 	ctx.reply(text.textBlocks[textBlockNumber].step2[0], null, Markup
     .keyboard([

@@ -8,7 +8,6 @@ let User = require('./userShema')
 let findFilm = require('./findFilm')
 
 async function saveToDB(ctx, step, value) {
-  // console.log('saveTODB', step, value)
   let _ctx = ctx
   let contextScene = ctx.scene;
   let id = ctx.message.from_id;
@@ -25,7 +24,7 @@ async function saveToDB(ctx, step, value) {
       let user = new User(
         {
           id: id,
-          value: value,
+          value: ctx.session.value,
           step: step
         }
       );
@@ -35,7 +34,7 @@ async function saveToDB(ctx, step, value) {
         }
       });
     } else {
-      user.value = value;
+      user.value = ctx.session.value;
       user.step = step;
       user.save(function (err) {
           if(err) {
