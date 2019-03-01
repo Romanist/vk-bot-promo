@@ -27,6 +27,7 @@ function findEase(cont, result, sku, link, age, ctx, skuNumber) {
 
 	  Film.findOne(options).skip(random).exec(
 	    function (err, result) {
+    	link = result.Category == '1' ? text.movieLink[0] : text.seriesLink[0]
       	cont.reply(text.badSearch[0] + result.Name + link + result.Slug + text.promo[0] + ctx.bonus + text.chips[0] + text.chipstaste[skuNumber] + text.final[0], sku, Markup
 		    .keyboard([
 		      [

@@ -41,6 +41,7 @@ async function generateBonus(cont, result, sku, link, age, skuNumber) {
       if (!result) {
 				findEase(cont, result, sku, link, age, ctx)
       } else {
+      	link = result.Category == '1' ? text.movieLink[0] : text.seriesLink[0]
       	cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.chips[0] + text.chipstaste[skuNumber], sku);
 
       	cont.reply(text.final[0], null, Markup
@@ -62,6 +63,7 @@ async function generateBonus(cont, result, sku, link, age, skuNumber) {
 			if (!result) {
 				findEase(cont, result, sku, link, age, ctx)
 			} else {
+				link = result.Category == '1' ? text.movieLink[0] : text.seriesLink[0]
 				cont.reply(text.goodSearch[0] + result.Name + link + result.Slug + text.chips[0] + text.chipstaste[skuNumber], sku);
 				cont.reply(text.promo[0] + ctx.promo + text.prefinal[0] + text.final[0], null, Markup
 			    .keyboard([
